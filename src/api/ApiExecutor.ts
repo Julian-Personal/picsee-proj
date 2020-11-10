@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { setInterceptors } from '@/api/interceptor';
 import { postLink } from '@/types/request/post';
-import { GetUrlResponse } from '@/types/response';
+import {GetUrlResponse, PostUrlResponse} from '@/types/response';
 
 interface ApiService extends AxiosInstance {
     get<T>(...args: any): Promise<T>;
@@ -29,6 +29,15 @@ export class ApiExecutor {
         return this.service.post<GetUrlResponse>(
             `/links/?access_token=${this.getToken}`,
             params
+        );
+    }
+
+    public modifyShortenUrl(encodeId: string, url: string): Promise<PostUrlResponse> {
+        return this.service.post<PostUrlResponse>(
+            `/links/${encodeId}/url?access_token=${this.getToken}&caller=client-simple&lang=zh-tw`,
+            {
+                value: url
+            }
         );
     }
 }

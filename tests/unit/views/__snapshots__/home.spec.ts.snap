@@ -38,13 +38,13 @@ exports[`Home.vue should render Home well 1`] = `
                 >
                   <label
                     class="v-label theme--light"
-                    for="input-4"
+                    for="input-6"
                     style="left: 0px; position: absolute;"
                   >
-                    Main input
+                    Shorten Url
                   </label>
                   <input
-                    id="input-4"
+                    id="input-6"
                     type="text"
                   />
                 </div>

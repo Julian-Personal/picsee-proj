@@ -7,7 +7,7 @@ import {
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import vuetify from '../../src/plugins/vuetify';
-import store from "../../src/plugins/store";
+import store from '../../src/plugins/store';
 import router from '../../src/router';
 
 export type ComponentOptions<T = any> = (

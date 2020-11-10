@@ -5,7 +5,7 @@
                 <v-form v-model="isValid" style="width: 80%">
                     <v-text-field
                         v-model="urlToShorten"
-                        label="Main input"
+                        label="Shorten Url"
                         :rules="urlRules"
                         class="pr-5"
                         hide-details="auto"
@@ -16,7 +16,7 @@
         </v-col>
 
         <v-col sm="8" style="margin: 0 auto">
-            <v-simple-table v-if="shortenUrls.length > 0">
+            <v-simple-table v-if="urlSaves.length > 0">
                 <template>
                     <thead>
                         <tr>
@@ -29,7 +29,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, index) in shortenUrls" :key="index">
+                        <tr v-for="(item, index) in urlSaves" :key="index">
                             <td style="max-width: 60%">{{ item.url }}</td>
                             <td>
                                 <a :href="item.shortenUrl">{{
@@ -48,19 +48,20 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { AppContext } from '@/AppContext';
 import { validateUrl } from '@/utils/validate';
-import { Action } from 'vuex-class';
+import { UrlStructure } from '@/types/response';
+import { Action, Getter } from 'vuex-class';
 import { InputValidationRules } from 'vuetify';
 
 @Component
 export default class HelloWorld extends Vue {
     @Prop() private msg!: string;
-    @Action('info/setToken') setToken!: (token: string) => void;
+    @Getter('info/shortenUrls') urlSaves!: Array<UrlStructure>;
+    @Action('info/setShortenUrls') setShortenUrls!: (
+        urlInfos: Array<UrlStructure>
+    ) => void;
 
     urlToShorten = '';
-    shortenUrls: Array<{
-        url: string;
-        shortenUrl: string;
-    }> = [];
+    shortenUrls: Array<UrlStructure> = [];
     isValid = false;
 
     urlRules: InputValidationRules = [
@@ -78,7 +79,7 @@ export default class HelloWorld extends Vue {
             shortenUrl: shortenUrl.data.picseeUrl
         });
 
-        this.setToken(this.urlToShorten);
+        this.setShortenUrls(this.shortenUrls);
     }
 }
 </script>
